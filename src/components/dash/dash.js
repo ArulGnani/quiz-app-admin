@@ -1,16 +1,16 @@
 import React, { Component } from 'react'
 
 // component's 
-import Dash from './components/dash/dash'
+import AddQuestion from './addQuestion'
 
-class App extends Component {
+class Dash extends Component {
   render() {
     return (
       <div>
-          <Dash />
+          <AddQuestion />
       </div>
     )
   }
 }
 
-export default App
+export default Dash
