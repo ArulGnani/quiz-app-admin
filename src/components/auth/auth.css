@@ -1,0 +1,116 @@
+.auth-box{
+    background: greenyellow;
+    width: 30%;
+    margin: auto;
+    text-align: center;
+    font-size: 25px;
+    font-weight: 600;
+    border-radius: 5px;
+    box-shadow: 10px 10px 20px rgb(153, 192, 93);
+    margin-top: 10%;
+    font-family: 'Roboto', sans-serif;
+}
+.auth-line{
+    width: 70%;
+    margin: auto;
+    padding: 2px;
+    border: none;
+    background: rgb(84, 121, 30);
+    border-radius: 10px;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+.auth-login{
+    padding: 20px;
+    transition: background 0.5s ease-in-out;
+}
+.auth-login:hover{
+    background: rgb(167, 223, 84);
+}
+.auth-reg{
+    padding: 20px;
+    transition: background 0.5s ease-in-out;
+}
+.auth-reg:hover{
+    background: rgb(167, 223, 84);
+}
+
+/* register component */
+.reg-main{
+    width: 30%;
+    margin: auto;
+    margin-top: 5%;
+}
+.reg-box{
+    background: greenyellow;
+    padding: 20px;
+    width: 100%;
+    display: grid;
+    border-radius: 5px;
+    box-shadow: 10px 10px 20px rgb(153, 192, 93);
+}
+.reg-err{
+    background: rgb(226, 11, 11);
+    font-size: 18px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    text-align: center;
+    color: white;
+    margin-bottom: 10px;
+}
+.reg-box > input{
+    border: 2px solid rgb(57, 66, 42);
+    padding: 10px ;
+    border-radius: 4px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+}
+.reg-btn{
+    padding: 8px;
+    background: rgb(97, 126, 54);
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: 600;
+    font-family: 'Roboto', sans-serif;
+    transition: background 1s ease-in-out;
+}
+
+.reg-btn:hover{
+    background: white;
+}
+.reg-login {
+    margin-top: 10px;
+    margin-left: 20px;
+}
+.reg-login-btn{
+    padding: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    background: rgb(46, 58, 28);
+    border: 3px solid rgb(46, 58, 28);
+    color : white;
+    border-radius: 5px;
+    font-family: 'Roboto', sans-serif;
+    transition: background 1s ease-in-out;
+}
+.reg-login-btn:hover{
+    background: white;
+    color: rgb(46, 58, 28);
+}
+.reg-login-txt{
+    font-size: 18px;
+    margin-right: 10px;
+    font-size: 600;
+    font-family: 'Roboto', sans-serif;
+    color: rgb(59, 65, 51);
+}
+.reg-t{
+    margin-left: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    color: rgb(79, 97, 52);
+}

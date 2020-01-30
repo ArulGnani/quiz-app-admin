@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import swal from 'sweetalert'
 // css
 import "./addQuestionStyle.css"
 
@@ -8,13 +8,14 @@ class AddQuestion extends Component {
         super()
         this.state = {
             currentUser : "tester",
-            quizName : "sample",
+            quizName : "sample-2",
             allQuestions : [],
             options : [],
             question : "",
             option : "",
             optionAns : "",
-            ans : "" 
+            ans : "",
+            noKey : false 
         }
     }
 
@@ -60,7 +61,8 @@ class AddQuestion extends Component {
     addQuestion = (event) => {
         event.preventDefault()
         let validate = this.validate()
-        if(validate === true){
+        let key = this.getKey()
+        if(validate === true && key){
             let obj = {
                 quizName : this.state.quizName,
                 createdBy : this.state.currentUser,
@@ -75,15 +77,60 @@ class AddQuestion extends Component {
                     headers : {
                         'Accept': 'application/json',
                         'Access-Control-Allow-Origin': true,
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'auth-key' : key
                     },
                     body : JSON.stringify(obj)
             })
             .then(res => res.json())
-            .then(data => console.log(data))
+            .then(data => {
+                if(!data.error){
+                    console.log(data)
+                    swal("new question added")
+                    this.renderNewQuestion(data)
+                    this.resetInputFields()
+                }else{
+                    swal("can't add question","something went wrong!...","info")
+                    this.resetInputFields()
+                }
+            })
         }else{
             alert(validate)
         }
+    }
+
+    // get key
+    getKey = () => {
+        let key = localStorage.getItem("auth-key")
+        if(key){
+            return key
+        }else{
+            this.setState({
+                noKey : true
+            })
+        }
+    }
+
+
+    // render-new-question in question list 
+    renderNewQuestion = (data) => {
+        let newQuestion = data
+        if (newQuestion){
+            this.setState({
+                allQuestions : [...this.state.allQuestions, newQuestion]
+            })
+        }
+    }
+
+    // reset all the input field 
+    resetInputFields = () => {
+        this.setState({
+            question : "",
+            option : "",
+            optionAns : "",
+            ans : "",
+            options : []
+        })
     }
 
     // validation 
@@ -98,10 +145,37 @@ class AddQuestion extends Component {
         }
     }
 
+    // delete-question 
+    deleteQuestion = (event) => {
+        event.preventDefault()
+        let delId = event.target.getAttribute("questionId")
+        console.log(event.target)
+        console.log(delId)
+    } 
+
     render() {
+        let allQuestion  = this.state.allQuestions.map((q,key) => {
+            return (
+                <div key={key} className="r-main">
+                    <h3 className="r-main-q">{ q.question.ques }</h3> 
+                    <button  className="r-main-del" questionId={q._id} onClick={this.deleteQuestion}>
+                        delete question
+                    </button>
+                    <div className="r-main-ops">
+                        {q.question.options.map((op,key) => {
+                            return(
+                                <div key={key} className="r-main-op">
+                                    <input type="radio"/>{op.optionAns}
+                                </div>
+                            )
+                        })}
+                    </div>
+                </div>
+            )
+        })
         let opts = this.state.options.map((op,key) => {
             return (
-                <div key={key}>
+                <div key={op.option} id={key}>
                     <div className="r-op">
                         <p className="r-op-p"><span>{op.option}</span> : {op.optionAns}</p>
                         <button className="r-op-del" onClick={this.deleteOption} option={op.option}>
@@ -114,18 +188,22 @@ class AddQuestion extends Component {
         return (
             <div className="add-main">
                 <div className="show-qestion"> 
-                    <h1>sample question</h1>
+                    <h3 className="add-title">All question</h3>
+                    <div>{ allQuestion }</div>
                 </div>
                 
                 <div className="question-block">
                     <div className="preview-question">
-                        <div>
-                            <h3>{this.state.question}</h3>
-                            <form>
+                        <h3 className="preview-question-tit">qustion preview</h3>
+                        <div className="preview-question-block">
+                            <h3 className="preview-question-block-q">question : {this.state.question}</h3>
+                            <h4 className="preview-question-block-a">answer : {this.state.ans}</h4>
+                            <form className="preview-question-block-opts">
+                                options : 
                                 {this.state.options.map((op,key) => {
                                     return (
                                         <React.Fragment>
-                                            <input type="radio"/><span>{op.optionAns}</span>
+                                            <input key={key} type="radio" className="preview-question-block-op"/><span key={key+1}>{op.optionAns}</span>
                                         </React.Fragment>
                                     )
                                 })}

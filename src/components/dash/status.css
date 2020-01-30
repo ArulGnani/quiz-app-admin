@@ -1,0 +1,18 @@
+.s-data{
+    background: rgb(136, 158, 102);
+    margin-top: 20px;
+    width: 80%;
+    margin: auto;
+}
+
+.s-table{
+    padding: 10px;
+}
+.s-table-tr >td{
+    border: 2px solid black;
+    margin: 10px;
+}
+.s-table-tb-tr > tr > td{
+    border: 2px solid black;
+    padding: 10px;
+}

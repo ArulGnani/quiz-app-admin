@@ -1,0 +1,25 @@
+.dash-nav{
+    background: yellowgreen;
+    height: 9vh;
+}
+.dash-nav > ul{
+    display: flex;
+    justify-content: space-around;
+}
+.dash-nav > ul > li{
+    list-style: none;
+    padding: 10px 20px;
+    transition: background 0.5s ease-in-out;
+}
+.dash-nav > ul > li:hover{
+    background: rgb(154, 175, 133);
+}
+
+.dash-nav > ul > li > a{
+    text-decoration: none;
+    color: black;
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    font-family: 'Roboto', sans-serif;
+}

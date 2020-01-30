@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 
 // component's 
-import Dash from './components/dash/dash'
+import Auth from "./components/auth/auth"
 
 class App extends Component {
   render() {
     return (
       <div>
-          <Dash />
+          <Auth />
       </div>
     )
   }
