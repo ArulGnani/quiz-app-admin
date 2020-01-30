@@ -13,7 +13,7 @@ class Login extends Component {
         password : "",
         submit : true,
         err : "",
-        login : true,
+        login : false,
         reg : false
     }
   }

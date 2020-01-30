@@ -12,7 +12,7 @@ class Auth extends Component {
         super()
         this.state = {
             reg : false,
-            login : true
+            login : false
         }
     }
 
