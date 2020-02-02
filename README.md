@@ -1,1 +1,1 @@
-URL : https://happy-allen-343de9.netlify.com/
+URL : https://quiz-admin.netlify.com/
