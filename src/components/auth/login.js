@@ -11,7 +11,7 @@ class Login extends Component {
         email : "",
         comp : "",
         password : "",
-        submit : true,
+        submit : false,
         err : "",
         login : false,
         reg : false
@@ -74,12 +74,12 @@ class Login extends Component {
   // store-key in local storage
   storeKey = (key) => {
     console.log(key)
-    let authKey = localStorage.getItem('auth-key')
+    let authKey = localStorage.getItem('key')
     if(authKey){
-      localStorage.removeItem("auth-key")
-      localStorage.setItem("auth-key",key)
+      localStorage.removeItem("key")
+      localStorage.setItem("key",key)
     }else{
-      localStorage.setItem("auth-key",key)
+      localStorage.setItem("key",key)
     }
   }
 
@@ -118,7 +118,7 @@ class Login extends Component {
     if (this.state.login){
       return(
         <div>
-          <Dash />
+          <Dash quizName={this.state.comp} email={this.state.email}/>
         </div>
       )
     }

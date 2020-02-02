@@ -9,7 +9,7 @@ import {
 
 import Status from './status'
 import Home from './home'
-import './dash.css'
+import './style/dash.css'
 // component's 
 import AddQuestion from './addQuestion'
 import Login from '../auth/login'
@@ -18,7 +18,19 @@ class Dash extends Component {
     constructor(){
         super()
         this.state = {
-          logout : false
+          logout : false,
+          comp : ""
+        }
+    }
+
+    componentDidMount = () => {
+        let compName = this.props.quizName
+        let email = this.props.email
+        if (compName && email){
+            this.setState({
+                comp : compName,
+                email
+            })
         }
     }
 
@@ -30,7 +42,7 @@ class Dash extends Component {
     }
 
     delKey = () => {
-        localStorage.removeItem("auth-key")
+        localStorage.removeItem("key")
     }
 
   render() {
@@ -56,16 +68,18 @@ class Dash extends Component {
                         <Link to="/status">Status</Link>
                     </li>
                     <li>
-                        <Link onClick={this.logout}>logout</Link>
+                        <a onClick={this.logout}>logout</a>
                     </li>
                 </ul>
 
                 <Switch>
                     <Route exact path="/">
-                        <Home />
+                        <Home compName={this.state.comp} 
+                         email={this.state.email}/>
                     </Route>
                     <Route path="/add-new-question">
-                        <AddQuestion />
+                        <AddQuestion compName={this.state.comp} 
+                         email={this.state.email}/>
                     </Route>
                     <Route path="/status">
                         <Status />

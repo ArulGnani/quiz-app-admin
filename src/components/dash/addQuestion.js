@@ -1,23 +1,35 @@
 import React, { Component } from 'react'
 import swal from 'sweetalert'
 // css
-import "./addQuestionStyle.css"
+import "./style/addQuestionStyle.css"
 
 class AddQuestion extends Component {
     constructor(){
         super()
         this.state = {
-            currentUser : "tester",
-            quizName : "sample-2",
+            currentUser : "",
             allQuestions : [],
             options : [],
             question : "",
             option : "",
             optionAns : "",
             ans : "",
-            noKey : false 
+            noKey : false,
+            compName : ""
         }
     }
+
+    componentDidMount = () => {
+        let compName = this.props.compName
+        let email = this.props.email
+        if(compName){
+            this.setState({
+                compName : compName,
+                currentUser : email
+            })
+        }
+    }
+
 
     // handel-change-event 
     handelChange = (event) => {
@@ -33,7 +45,6 @@ class AddQuestion extends Component {
         let option = this.state.option
         let optionAns = this.state.optionAns
         let op = { option : option, optionAns : optionAns}
-        console.log(op)
         this.setState({
             options : [...this.state.options, op]
         })
@@ -64,12 +75,10 @@ class AddQuestion extends Component {
         let key = this.getKey()
         if(validate === true && key){
             let obj = {
-                quizName : this.state.quizName,
-                createdBy : this.state.currentUser,
-                question : {
-                    ques : this.state.question,
-                    options : [...this.state.options],
-                    ans : this.state.ans
+                "question" : {
+                    "ques" : this.state.question,
+                    "options" : [...this.state.options],
+                    "ans" : this.state.ans
                 }
             }
             fetch("https://quiz-app-v1.herokuapp.com/api/admin/quiz/add-new-questions",{
@@ -78,7 +87,7 @@ class AddQuestion extends Component {
                         'Accept': 'application/json',
                         'Access-Control-Allow-Origin': true,
                         'Content-Type': 'application/json',
-                        'auth-key' : key
+                        'key' : key
                     },
                     body : JSON.stringify(obj)
             })
@@ -101,7 +110,7 @@ class AddQuestion extends Component {
 
     // get key
     getKey = () => {
-        let key = localStorage.getItem("auth-key")
+        let key = localStorage.getItem("key")
         if(key){
             return key
         }else{
@@ -149,8 +158,31 @@ class AddQuestion extends Component {
     deleteQuestion = (event) => {
         event.preventDefault()
         let delId = event.target.getAttribute("questionId")
-        console.log(event.target)
-        console.log(delId)
+        let key = this.getKey()
+        let obj = {"id" : delId}
+        if(delId && key){
+            fetch("https://quiz-app-v1.herokuapp.com/api/admin/quiz/delete-question",{
+                method : "DELETE",
+                headers : {
+                    'Accept': 'application/json',
+                    'Access-Control-Allow-Origin': true,
+                    'Content-Type': 'application/json',
+                    'key' : key
+                },
+                body : JSON.stringify(obj)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.msg){
+                    this.setState({
+                        allQuestions : this.state.allQuestions.filter(q => q._id !== delId)
+                    })
+                    swal(data.msg)
+                }else{
+                    swal(data.err)
+                }
+            })
+        }
     } 
 
     render() {

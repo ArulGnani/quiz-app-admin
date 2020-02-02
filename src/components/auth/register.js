@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 // css 
-import './auth.css'
+import './style/auth.css'
 // components 
 import Login from './login'
 

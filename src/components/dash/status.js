@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
-import './status.css'
+import swal from 'sweetalert'
+
+// css
+import './style/status.css'
 
 class Status extends Component {
   constructor(){
     super()
     this.state = {
-      stat : [],
-      res : [],
+      status : [],
       noKey : false,
       msg : ""
     }
@@ -14,29 +16,29 @@ class Status extends Component {
 
   componentDidMount = () => {
     this.getStat()
-    this.getRes()
   }
 
   // get result from db
-  getRes = () => {
+  getStat = () => {
     let key = this.getKey()
     if(key){
-      fetch("https://quiz-app-v1.herokuapp.com/api/admin/quiz/get-result",{
+      fetch("https://quiz-app-v1.herokuapp.com/api/admin/quiz/current-status",{
           method : "GET",
               headers : {
                   'Accept': 'application/json',
                   'Access-Control-Allow-Origin': true,
                   'Content-Type': 'application/json',
-                  'auth-key' : key
+                  'key' : key
               }
       })
       .then(res => res.json())
       .then(data => {
         if(!data.error){
           this.setState({
-            res : [...data]
+            status : [...data]
           })
         }else{
+          swal(data.error)
           this.setState({
             msg : data.error
           })
@@ -44,37 +46,9 @@ class Status extends Component {
       })    
   }}  
 
-  // get-data form db 
-  getStat = () => {
-        let key = this.getKey()
-        if(key){
-            fetch("https://quiz-app-v1.herokuapp.com/api/admin/quiz/current-status",{
-                method : "GET",
-                    headers : {
-                        'Accept': 'application/json',
-                        'Access-Control-Allow-Origin': true,
-                        'Content-Type': 'application/json',
-                        'auth-key' : key
-                    }
-            })
-            .then(res => res.json())
-            .then(data => {
-              if(!data.error){
-                this.setState({
-                  stat : [...data]
-                })
-              }else{
-                this.setState({
-                  msg : data.error
-                })
-              }
-            })    
-        }
-    }
-    
     // get auth-key 
     getKey = () => {
-        let key = localStorage.getItem("auth-key")
+        let key = localStorage.getItem("key")
         if(key){
             return key
         }else{
@@ -86,16 +60,16 @@ class Status extends Component {
 
 
   render() {
-    let stat = this.state.stat.map((s,k) => {
+    let stat = this.state.status.map((stat,k) => {
       return(
           <tr key={k}>
-              <td>{s.email}</td>
-              <td>{s.teamName}</td>
-              <td>{s.quizName}</td>
-              <td>{s.startTime}</td>
-              <td>{s.stopTime === false ? "-" : "-"}</td>
-              <td>{s.startQuiz === true ? "on" : "off"}</td>
-              <td>{s.points === false ? "-" : "-"}</td>
+              <td>{stat.email}</td>
+              <td>{stat.teamName}</td>
+              <td>{stat.quizName}</td>
+              <td>{stat.startTime}</td>
+              <td>{stat.endTime}</td>
+              <td>{stat.startQuiz === true ? "on" : "off"}</td>
+              <td>{stat.points === false ? "-" : stat.points}</td>
           </tr> 
       )
     })
@@ -106,8 +80,7 @@ class Status extends Component {
               {this.state.msg}
           </div>
           <div className="s-btns">
-              <button>status</button><br/>
-              <button>result</button>
+              <button onClick={this.getStat} className="ref">refresh</button>
           </div>
           <div className="s-data">
               <tabel className="s-table">
