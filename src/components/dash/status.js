@@ -76,11 +76,11 @@ class Status extends Component {
 
     return (
       <div className="s-main">
-          <div className="s-msg">
-              {this.state.msg}
-          </div>
           <div className="s-btns">
               <button onClick={this.getStat} className="ref">refresh</button>
+          </div>
+          <div className="total"> 
+              <h3>total no of participants : {this.state.status.length}</h3>
           </div>
           <div className="s-data">
               <tabel className="s-table">

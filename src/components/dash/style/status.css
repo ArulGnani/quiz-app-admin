@@ -46,3 +46,9 @@
 .ref:hover{
     background: rgb(217, 235, 217);
 }
+
+.total{
+    position: absolute;
+    top: 12%;
+    left: 80%;
+}

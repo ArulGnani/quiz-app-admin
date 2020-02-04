@@ -185,6 +185,8 @@ class AddQuestion extends Component {
         }
     } 
 
+
+
     render() {
         let allQuestion  = this.state.allQuestions.map((q,key) => {
             return (
