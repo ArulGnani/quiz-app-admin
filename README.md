@@ -13,4 +13,4 @@
  
  - [click here to goto client site](https://quiz-v2.netlify.app/)
  - use this web app to conduct competition
- - [repo for this project](https://github.com/ArulGnani/quiz-app-frontend) 
+ - [repo for this project](https://github.com/ArulGnani/quiz-app-frontend/tree/v2) 
